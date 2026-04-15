@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer App</title>
+</head>
+<body style="background-color: lightblue;">
+
+<h1>Customer Management System</h1>
+
+
+<form th:action="@{/save}" method="post" th:object="${customer}">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <input type="text" th:field="*{name}" placeholder="Name" required />
+
+    <input type="email" th:field="*{email}" placeholder="Email" required />
+
+    <input type="text" th:field="*{phone}" placeholder="Phone" required />
+
+    <button type="submit"
+            th:text="*{id} == null ? 'Add' : 'Update'">
+    </button>
+
+</form>
+
+
+<h3>Search:</h3>
+<form th:action="@{/search}" method="get">
+    <input type="text" name="query" placeholder="Search by name" required />
+    <button type="submit">Search</button>
+</form>
+
+
+<ul>
+    <li th:each="c : ${customers}">
+        <span th:text="${c.name}"></span>
+        (<span th:text="${c.email}"></span>)
+        - Phone: <span th:text="${c.phone}"></span>
+
+        <a th:href="@{/edit/{id}(id=${c.id})}">Edit</a>
+    </li>
+</ul>
+
+</body>
+</html>
